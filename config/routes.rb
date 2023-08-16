@@ -1,8 +1,17 @@
 Rails.application.routes.draw do
-  root to: 'pages#home'
+
+
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }
+
+  resources :posts do
+    resources :comments, only: [:create]
+    resource :likes, only: [:create, :destroy]
+  end
+
+  root 'posts#index'
+
   get 'home/index'
   get 'likes/create'
   get 'comments/create'

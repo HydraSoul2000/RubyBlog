@@ -1,2 +1,27 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+<h1><%= @post.title %></h1>
+<p><strong>Posted by:</strong> <%= @post.user.email %></p>
+<p><%= @post.content %></p>
+<p>Likes: <%= @post.likes.count %></p>
+<%= link_to 'Like', post_likes_path(@post), method: :post, class: 'btn btn-sm btn-primary' %>
+<%= link_to 'Unlike', post_likes_path(@post), method: :delete, class: 'btn btn-sm btn-danger' %>
+
+<% if current_user == @post.user %>
+  <%= link_to 'Edit', edit_post_path(@post), class: 'btn btn-sm btn-warning' %>
+  <%= link_to 'Delete', @post, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+<% end %>
+
+<h2>Comments</h2>
+<% @post.comments.each do |comment| %>
+  <p><strong><%= comment.user.email %>:</strong> <%= comment.content %></p>
+  <% if current_user == comment.user %>
+    <%= link_to 'Delete Comment', [@post, comment], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+  <% end %>
+<% end %>
+
+<h2>Add a Comment</h2>
+<%= form_with(model: [@post, @post.comments.build], local: true) do |form| %>
+  <%= form.text_area :content, placeholder: 'Your comment...', class: 'form-control' %>
+  <%= form.submit 'Add Comment', class: 'btn btn-primary' %>
+<% end %>
+
+<%= link_to 'Back to All Posts', posts_path %>
