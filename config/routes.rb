@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-
+  root 'posts#index'
 
   devise_for :users, controllers: {
-    sessions: 'users/sessions'
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
   }
 
   resources :posts do
@@ -10,7 +11,14 @@ Rails.application.routes.draw do
     resource :likes, only: [:create, :destroy]
   end
 
-  root 'posts#index'
+  get 'my_posts', to: 'posts#my_posts', as: :my_posts
+
+  namespace :users do
+    resource :profile, only: [:show], controller: 'profile'
+  end
+
+
+
 
   get 'home/index'
   get 'likes/create'

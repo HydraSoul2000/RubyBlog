@@ -22,6 +22,10 @@ class PostsController < ApplicationController
     end
   end
 
+  def my_posts
+    @my_posts = current_user.posts
+  end
+
   # Add edit, update, and destroy actions
   # ...
 
