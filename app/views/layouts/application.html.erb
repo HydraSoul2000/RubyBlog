@@ -37,8 +37,9 @@
       </ul>
 
       <!-- Logo (Center) -->
-      <a class="navbar-brand" href="#"><img src="/path/to/your/logo.png" alt="Logo"></a>
-
+      <a class="navbar-brand" href="/">
+        <img src="<%= image_path('random-logo.png') %>" alt="Logo" class="logo-img">
+      </a>
       <!-- Navigation Links (Right Side) -->
       <ul class="navbar-nav ml-auto">
         <% if user_signed_in? %>

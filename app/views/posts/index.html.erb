@@ -1,5 +1,7 @@
 <h1>All Posts</h1>
+
 <div class="container mt-5">
+  <%= link_to 'New Post', new_post_path %>
   <% @posts.each do |post| %>
     <div class="row mb-4">
       <div class="col-md-6 offset-md-3">
@@ -10,19 +12,3 @@
     </div>
   <% end %>
 </div>
-
-<% @posts.each do |post| %>
-  <h2><%= link_to post.title, post %></h2>
-  <p><strong>Posted by:</strong> <%= post.user.email %></p>
-  <p><%= truncate(post.content, length: 150) %></p>
-  <p>Likes: <%= post.likes.count %></p>
-  <%= link_to 'Like', post_likes_path(post), method: :post, class: 'btn btn-sm btn-primary' %>
-  <%= link_to 'Unlike', post_likes_path(post), method: :delete, class: 'btn btn-sm btn-danger' %>
-  <%= link_to 'View', post %>
-  <% if current_user == post.user %>
-    <%= link_to 'Edit', edit_post_path(post), class: 'btn btn-sm btn-warning' %>
-    <%= link_to 'Delete', post, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
-  <% end %>
-  <hr>
-<% end %>
-<%= link_to 'New Post', new_post_path %>
