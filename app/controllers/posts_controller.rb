@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @posts = Post.all
+    @posts = Post.includes(:user).order(created_at: :desc)
   end
 
   def show
@@ -23,11 +23,35 @@ class PostsController < ApplicationController
   end
 
   def my_posts
-    @my_posts = current_user.posts
+    @my_posts = current_user.posts.order(created_at: :desc)
   end
 
-  # Add edit, update, and destroy actions
-  # ...
+  def edit
+    @post = Post.find(params[:id])
+  end
+
+  def update
+    @post = Post.find(params[:id])
+    if @post.update(post_params)
+      redirect_to post_path(@post), notice: 'Post was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @post = Post.find(params[:id])
+
+    if @post.destroy
+      redirect_to posts_path, notice: 'Post was successfully deleted.'
+    else
+      flash[:alert] = 'Error deleting post.'
+      redirect_to post_path(@post)
+    end
+  end
+
+
+
 
   private
 

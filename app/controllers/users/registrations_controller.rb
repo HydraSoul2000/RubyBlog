@@ -61,9 +61,28 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super(resource)
   # end
   #
+
+  def update
+    if current_user.update(account_update_params)
+      redirect_to edit_user_registration_path, notice: 'Profile updated successfully.'
+    else
+      render :edit
+    end
+  end
+
   protected
 
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+  end
+
+  private
+
+  def sign_up_params
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :avatar)
+  end
+
+  def account_update_params
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :current_password, :avatar)
   end
 end

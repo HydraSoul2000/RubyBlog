@@ -1,6 +1,12 @@
 <h1>My Posts</h1>
-<% @my_posts.each do |post| %>
-  <h2><%= link_to post.title, post %></h2>
-  <p><%= truncate(post.content, length: 150) %></p>
-  <!-- Other post details and actions -->
-<% end %>
+<div class="container mt-5">
+  <% @my_posts.each do |post| %>
+    <div class="row mb-4">
+      <div class="col-md-6 offset-md-3">
+
+        <%= render 'post_card', post: post %>
+
+      </div>
+    </div>
+  <% end %>
+</div>

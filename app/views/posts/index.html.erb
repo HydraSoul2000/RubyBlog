@@ -1,4 +1,16 @@
 <h1>All Posts</h1>
+<div class="container mt-5">
+  <% @posts.each do |post| %>
+    <div class="row mb-4">
+      <div class="col-md-6 offset-md-3">
+
+        <%= render 'post_card', post: post %>
+
+      </div>
+    </div>
+  <% end %>
+</div>
+
 <% @posts.each do |post| %>
   <h2><%= link_to post.title, post %></h2>
   <p><strong>Posted by:</strong> <%= post.user.email %></p>

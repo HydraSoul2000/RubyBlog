@@ -1,7 +1,20 @@
 <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
+
+  <% if resource.avatar.attached? %>
+    <p>Current Profile Picture:</p>
+    <%= image_tag resource.avatar, class: 'rounded-circle', style: 'max-width: 100px;' %>
+  <% end %>
+
+  <%= f.label :avatar %>
+  <%= f.file_field :avatar %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name, autofocus: true, autocomplete: "name"  %>
+  </div>
 
   <div class="field">
     <%= f.label :email %><br />
@@ -34,6 +47,7 @@
   <div class="actions">
     <%= f.submit "Update" %>
   </div>
+
 <% end %>
 
 <h3>Cancel my account</h3>

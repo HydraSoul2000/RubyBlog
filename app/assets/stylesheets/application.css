@@ -13,3 +13,14 @@
  *= require_tree .
  *= require_self
  */
+
+
+/* Import Google Font */
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Center header text */
+h1 {
+    text-align: center;
+}

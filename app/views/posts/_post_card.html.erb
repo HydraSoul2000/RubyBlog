@@ -1,0 +1,41 @@
+<div class="card post-card" data-post-id="<%= post.id %>">
+  <div class="card-header">
+    <div class="d-flex align-items-center">
+      <% if post.user.avatar.attached? %>
+        <img src="<%= rails_blob_path(post.user.avatar, disposition: 'attachment', only_path: true) %>" alt="Profile Picture" class="rounded-circle mr-2" style="width: 30px; height: 30px;">
+      <% else %>
+        <!-- Display a default profile picture or a placeholder image -->
+        <img src="/path/to/default-avatar.png" alt="Default Profile Picture" class="rounded-circle mr-2" style="width: 30px; height: 30px;">
+      <% end %>
+      <h5 class="mb-0"><%= post.title %></h5>
+      <% if current_user == post.user %>
+      <div class="dropdown ml-auto">
+        <button class="btn btn-outline-dark dropdown-toggle" type="button" id="postOptionsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-ellipsis-v"></i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="postOptionsDropdown">
+          <%= link_to 'Edit', edit_post_path(post), class: 'dropdown-item' %>
+          <a href="#" class="dropdown-item delete-link" data-post-id="<%= post.id %>">Delete</a>
+          <%= link_to 'Delete', post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'dropdown-item' %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-text"><%= post.content %></p>
+  </div>
+  <div class="card-footer">
+    <div class="text-muted mb-2">
+      Posted by: <%= post.user.name %> at: <%= post.created_at.strftime('%B %d, %Y %H:%M') %>
+    </div>
+    <div class="d-flex justify-content-between">
+      <%= link_to 'Like', post_likes_path(post), method: :post, class: 'btn btn-primary' %>
+      <%= link_to 'Unlike', post_likes_path(post), method: :delete, class: 'btn btn-secondary' %>
+      <% if current_user == post.user %>
+        <%= link_to 'Edit', edit_post_path(post), class: 'btn btn-warning' %>
+        <%= link_to 'Delete', post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+      <% end %>
+    </div>
+  </div>
+</div>
